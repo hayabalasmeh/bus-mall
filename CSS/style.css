@@ -1,0 +1,27 @@
+
+body{
+    background-color: antiquewhite;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+#rightp{
+    float: left;
+    width:30%;
+
+}
+#leftp{
+    float: left;
+    width: 30%;
+
+}
+
+#middlep{
+    float: left;
+    width:30%;
+}
+
+#show {
+    clear:both
+}
+#list{
+    clear: both;
+}
