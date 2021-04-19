@@ -93,10 +93,12 @@ showingProduct();
 
 
 //attaching products elements to advertlistner
+//i can also only add the container of this images to the eventlistener but yes that why I didn't use the container as if we click inside the box container even if we didn't click the images themselves, need to add count-- and alert in last else in the checking the index above
 
 firstProduct.addEventListener('click',startVoting);
 secondProduct.addEventListener('click',startVoting);
 thirdProduct.addEventListener('click',startVoting);
+
 
 
 
@@ -129,9 +131,9 @@ function startVoting (event){
        
        
         showResult.addEventListener('click',showList); //making showlist button
-         firstProduct.removeEventListener('click', startVoting);
-         secondProduct.removeEventListener('click',startVoting);
-         thirdProduct.removeEventListener('click',startVoting);
+        firstProduct.removeEventListener('click', startVoting);
+        secondProduct.removeEventListener('click',startVoting);
+        thirdProduct.removeEventListener('click',startVoting);
         
          
         }
@@ -144,8 +146,8 @@ function startVoting (event){
     
     
     function showList(){
-        let unorder= document.getElementById('list');
-        for(let i=0; i< allProducts.length;i++) {
+       let unorder= document.getElementById('list');
+    for(let i=0; i< allProducts.length;i++) {
             let listItem = document.createElement('li');
             unorder.appendChild(listItem);
             listItem.textContent = `Name of the product : ${allProducts[i].productName}, and Number of times being showen : ${allProducts[i].showing}
