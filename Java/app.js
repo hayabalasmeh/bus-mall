@@ -79,20 +79,17 @@ function showingProduct (){
     productMiddleInd= showingRandomProductNum();
     productLeftInd= showingRandomProductNum();
     
-//making sure that th index generated not the same for the three products
+//making sure that the index generated not the same for the three products, and there is no duplicate in photos 
 
-while(duplicateArr.includes(productRightInd) || duplicateArr.includes(productLeftInd) || duplicateArr.includes(productMiddleInd)){
+
+
+while(productRightInd===productMiddleInd || productMiddleInd===productLeftInd || productRightInd === productLeftInd || duplicateArr.includes(productRightInd) || duplicateArr.includes(productLeftInd) || duplicateArr.includes(productMiddleInd)){
     productMiddleInd= showingRandomProductNum();
     productLeftInd= showingRandomProductNum();
-}
-
-
-while(productRightInd===productMiddleInd || productMiddleInd===productLeftInd || productRightInd === productLeftInd){
-    productMiddleInd= showingRandomProductNum();
-    productLeftInd= showingRandomProductNum()
+    productRightInd= showingRandomProductNum();
     }
 
-duplicateArr=[productRightInd,productLeftInd,productMiddleInd]; 
+duplicateArr=[productRightInd,productLeftInd,productMiddleInd]; // resetting the values of the array as not to get to infinite loop as we want the duplicate for the 2 rounds not for all rounds
 
     firstProduct.src = allProducts[productRightInd].productOrigin;
     allProducts[productRightInd].showing ++; //to count that this image is showen
