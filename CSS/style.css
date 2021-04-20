@@ -4,21 +4,13 @@ body{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin:20%
 }
-#rightp{
-    float: left;
-    width:30%;
-
-}
-#leftp{
-    float: left;
-    width: 30%;
-
+img{
+    margin: 30px;
+   display: inline-block;
+   width: 20%;
+   height: 300px;
 }
 
-#middlep{
-    float: left;
-    width:30%;
-}
 
 #show {
     clear:both
