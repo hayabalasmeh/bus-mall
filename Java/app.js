@@ -7,12 +7,12 @@ let container = document.getElementById('first');
 let firstProduct = document.getElementById('leftp');
 let secondProduct = document.getElementById('rightp');
 let thirdProduct = document.getElementById('middlep');
-let showResult= document.getElementById('show');
+let showResult= document.getElementById('list');
 
 //creating the variables needed
 
 let counter= 0;
-let maxAttempt=25;
+let maxAttempt=10;
 let allProducts= [];
 let productRightInd;
 let productMiddleInd;
@@ -61,7 +61,7 @@ new Product('usb','bus-mall/usb.gif');
 new Product('water','bus-mall/water-can.jpg');
 new Product('wine glass','bus-mall/wine-glass.jpg');
 
-console.log(allProducts);
+//console.log(allProducts);
 
 //creating random products index
 
@@ -70,7 +70,7 @@ function showingRandomProductNum () {
     }
 
 showingRandomProductNum();
-console.log(showingRandomProductNum());
+//console.log(showingRandomProductNum());
 
 //showing random products
 
@@ -91,10 +91,12 @@ while(productRightInd===productMiddleInd || productMiddleInd===productLeftInd ||
 
 duplicateArr=[productRightInd,productLeftInd,productMiddleInd]; // resetting the values of the array as not to get to infinite loop as we want the duplicate for the 2 rounds not for all rounds
 
-    firstProduct.src = allProducts[productRightInd].productOrigin;
-    allProducts[productRightInd].showing ++; //to count that this image is showen
-    secondProduct.src = allProducts[productLeftInd].productOrigin;
-    allProducts[productLeftInd].showing ++;
+    firstProduct.src = allProducts[productLeftInd].productOrigin;
+    allProducts[productLeftInd].showing ++; 
+    //to count that this image is showen
+    secondProduct.src = allProducts[productRightInd].productOrigin;
+    allProducts[productRightInd].showing ++;
+
     thirdProduct.src = allProducts[productMiddleInd].productOrigin;
     allProducts[productMiddleInd].showing ++;
     
@@ -106,9 +108,23 @@ duplicateArr=[productRightInd,productLeftInd,productMiddleInd]; // resetting the
 
 
 
+function savingToLocal (){
+    localStorage.setItem('allVoting',JSON.stringify(allProducts));
+}
+
+function returningFromLocal (){
+let returnedObj = localStorage.getItem('allVoting');
+let totalReturned = JSON.parse(returnedObj);
+if (totalReturned){
+    allProducts=totalReturned;
+}
+// for(let i=0; i< allProducts.length;i++) {
+//     allVotes.push(allProducts[i].voting);
+//     allShowing.push(allProducts[i].showing);
+//  }
 
 
-
+}
 
 //attaching products elements to advertlistner
 //i can also only add the container of this images to the eventlistener but yes that why I didn't use the container as if we click inside the box container even if we didn't click the images themselves, need to add count-- and alert in last else in the checking the index above
@@ -127,12 +143,12 @@ function startVoting (event){
     counter++; //to start counting the clicks
 
     if(counter <= maxAttempt){// to make sure the maximum attempts are not exceeded
-
+       
 
     if(event.target.id ==='rightp'){ //to know which product has been clicked
         allProducts[productRightInd].voting++; //to increase the vote of the clicked product
         
-    }
+              }
         else if (event.target.id ==='leftp') {
         allProducts[productLeftInd].voting++;
         
@@ -142,52 +158,58 @@ function startVoting (event){
        
             
         }
-        else{
+            else{
             counter--;
+            alert('please click on the image');
         }
+        
      showingProduct(); //to keep showing the products after clicking
-     
+     console.log(counter);
     
+     
     }
     
     else {  
-        showChart();
+       
+        
+        showList();
         chart();
        
-        //showResult.addEventListener('click',showList); //making showlist button
+        showResult.addEventListener('click',showList); //making showlist button
         //firstProduct.removeEventListener('click', startVoting);
         //secondProduct.removeEventListener('click',startVoting);
         //thirdProduct.removeEventListener('click',startVoting);
         
         container.removeEventListener('click',startVoting); //attaching event.lis to the container
-        
+        showResult.removeEventListener('click',showList);
          
         }
-        
+        savingToLocal();   
     }
     
-    
-    
-    function showChart(){
-       //let unorder= document.getElementById('list');
+    returningFromLocal();
+    //making the list 
+    function showList(){
+        let unorder= document.getElementById('list');
     for(let i=0; i< allProducts.length;i++) {
             allVotes.push(allProducts[i].voting);
             allShowing.push(allProducts[i].showing);
             //console.log(allShowing);
-            
-        //     let listItem = document.createElement('li');
-        //     unorder.appendChild(listItem);
-        //     listItem.textContent = `Name of the product : ${allProducts[i].productName}, and Number of times being showen : ${allProducts[i].showing}
-        //   and Number of votes: ${allProducts[i].voting}`   
+            //savingToLocal();
+           let listItem = document.createElement('li');
+            unorder.appendChild(listItem);
+           listItem.textContent = `Name of the product : ${allProducts[i].productName}, and Number of times being showen : ${allProducts[i].showing}
+         and Number of votes: ${allProducts[i].voting}`   
                }
-        //       showResult.removeEventListener('click',showList);// in order to be called once and view the results once and then stop
+              
+             //showResult.removeEventListener('click',showList);// in order to be called once and view the results once and then stop
             }
     
 
-
+    //creating chart
     function chart (){
-    let ctx = document.getElementById('chartForm');//creating chart
-    let chartForm = new Chart (ctx,{
+    let ctx = document.getElementById('chartForm');
+    new Chart (ctx,{
             type: 'bar',
             data: {
                 labels: allProductsNames,
